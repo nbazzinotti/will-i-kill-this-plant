@@ -1,65 +1,189 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+
+const lightOptions = [
+  { value: "bright-direct", label: "Bright direct" },
+  { value: "bright-indirect", label: "Bright indirect" },
+  { value: "medium", label: "Medium" },
+  { value: "low", label: "Low / no window" },
+];
+
+const waterOptions = [
+  { value: "weekly", label: "Weekly, on schedule" },
+  { value: "sometimes", label: "Sometimes" },
+  { value: "rarely", label: "Rarely" },
+  { value: "forget", label: "Honestly, I forget" },
+];
+
+const petsOptions = [
+  { value: "no", label: "No" },
+  { value: "yes", label: "Yes — pet, toddler, or both" },
+];
+
+const vacationOptions = [
+  { value: "rarely", label: "Rarely" },
+  { value: "seasonal", label: "Once a season" },
+  { value: "often", label: "Monthly or more" },
+];
 
 export default function Home() {
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [name, setName] = useState("");
+  const [light, setLight] = useState("");
+  const [water, setWater] = useState("");
+  const [pets, setPets] = useState("");
+  const [vacation, setVacation] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const hasPlant = photo !== null || name.trim().length > 0;
+  const allAnswered =
+    hasPlant && light !== "" && water !== "" && pets !== "" && vacation !== "";
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!allAnswered) return;
+    setSubmitting(true);
+    // TODO: POST to /api/verdict in next iteration
+    await new Promise((r) => setTimeout(r, 600));
+    alert(
+      "Verdict route coming next. We see your habits — there will be thoughts.",
+    );
+    setSubmitting(false);
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen px-6 py-16 md:py-24">
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
+        <header className="mb-12 md:mb-16">
+          <div className="text-[10px] tracking-[0.22em] uppercase font-bold text-olive mb-5">
+            ✿ 1,247 plants saved from bad owners
+          </div>
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-forest mb-5">
+            Will I Kill
+            <br />
+            This Plant?
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xl md:text-2xl text-forest font-medium leading-snug max-w-xl">
+            We know your history.{" "}
+            <span className="font-bold">The plants do, too.</span>
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+          <p className="mt-3 text-base text-olive font-medium">
+            Get the verdict before you waste $42… once again.
+          </p>
+        </header>
+
+        {/* Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="bg-cream rounded-2xl border border-forest/10 shadow-[0_6px_32px_-16px_rgba(45,79,53,0.18)] p-6 md:p-8 space-y-8"
+        >
+          {/* Plant identifier */}
+          <div>
+            <label className="text-[11px] tracking-[0.2em] uppercase font-bold text-olive mb-3 block">
+              The Plant
+            </label>
+            <div className="border-2 border-dashed border-olive/60 rounded-xl p-5 hover:bg-mint/30 transition-colors">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setPhoto(e.target.files?.[0] ?? null)}
+                className="block w-full text-sm text-forest file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-forest file:text-cream hover:file:opacity-90 file:cursor-pointer"
+              />
+              {photo && (
+                <p className="mt-2 text-xs text-olive">
+                  Selected: {photo.name}
+                </p>
+              )}
+            </div>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="…or type the plant name"
+              className="mt-3 w-full px-4 py-3 rounded-lg bg-transparent border-2 border-forest/30 placeholder:text-olive/70 text-forest focus:outline-none focus:border-forest"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <p className="mt-2 text-xs text-olive">
+              We don&apos;t save your photo. Pinky promise.
+            </p>
+          </div>
+
+          <QuestionGroup
+            label="Light situation"
+            options={lightOptions}
+            value={light}
+            onChange={setLight}
+          />
+          <QuestionGroup
+            label="Watering — honestly"
+            options={waterOptions}
+            value={water}
+            onChange={setWater}
+          />
+          <QuestionGroup
+            label="Pet or toddler in the chaos zone?"
+            options={petsOptions}
+            value={pets}
+            onChange={setPets}
+          />
+          <QuestionGroup
+            label="Away more than 5 days?"
+            options={vacationOptions}
+            value={vacation}
+            onChange={setVacation}
+          />
+
+          <button
+            type="submit"
+            disabled={!allAnswered || submitting}
+            className="w-full bg-terracotta text-cream font-semibold text-base py-4 rounded-full transition-opacity hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Documentation
-          </a>
-        </div>
-      </main>
+            {submitting ? "Consulting the plant gods…" : "Give me the verdict"}
+          </button>
+        </form>
+
+        {/* Footer */}
+        <footer className="mt-16 text-center text-xs text-olive">
+          For entertainment. We are not liable for plant deaths.
+        </footer>
+      </div>
+    </main>
+  );
+}
+
+function QuestionGroup({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: { value: string; label: string }[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="text-[11px] tracking-[0.2em] uppercase font-bold text-olive mb-3 block">
+        {label}
+      </label>
+      <div className="flex flex-wrap gap-2">
+        {options.map((opt) => (
+          <button
+            key={opt.value}
+            type="button"
+            onClick={() => onChange(opt.value)}
+            className={`px-4 py-2.5 rounded-full text-sm font-medium border-2 transition-colors ${
+              value === opt.value
+                ? "bg-forest text-cream border-forest"
+                : "bg-transparent text-forest border-forest/25 hover:border-forest hover:bg-mint/40"
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
