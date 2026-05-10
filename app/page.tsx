@@ -53,8 +53,8 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen px-6 py-16 md:py-24">
-      <div className="max-w-2xl mx-auto">
+    <main className="min-h-screen px-5 sm:px-6 py-14 md:py-24 w-full">
+      <div className="max-w-2xl mx-auto w-full">
         {/* Header */}
         <header className="mb-12 md:mb-16">
           <div className="text-[10px] tracking-[0.22em] uppercase font-bold text-olive mb-5">
@@ -122,7 +122,7 @@ export default function Home() {
             onChange={setWater}
           />
           <QuestionGroup
-            label="Pet or toddler in the chaos zone?"
+            label="Pets or toddlers?"
             options={petsOptions}
             value={pets}
             onChange={setPets}
@@ -174,7 +174,7 @@ function QuestionGroup({
             key={opt.value}
             type="button"
             onClick={() => onChange(opt.value)}
-            className={`px-4 py-2.5 rounded-full text-sm font-medium border-2 transition-colors ${
+            className={`px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-full text-[13px] sm:text-sm font-medium border-2 transition-colors whitespace-nowrap ${
               value === opt.value
                 ? "bg-forest text-cream border-forest"
                 : "bg-transparent text-forest border-forest/25 hover:border-forest hover:bg-mint/40"
