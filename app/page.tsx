@@ -81,22 +81,25 @@ export default function Home() {
         >
           {/* Plant identifier */}
           <div>
-            <label className="text-[11px] tracking-[0.2em] uppercase font-bold text-olive mb-3 block">
+            <div className="text-[11px] tracking-[0.2em] uppercase font-bold text-olive mb-3">
               The Plant
-            </label>
-            <div className="border-2 border-dashed border-olive/60 rounded-xl p-5 hover:bg-mint/30 transition-colors">
+            </div>
+            <label className="flex flex-col items-start gap-3 border-2 border-dashed border-olive/60 rounded-xl p-5 cursor-pointer hover:bg-mint/30 transition-colors">
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => setPhoto(e.target.files?.[0] ?? null)}
-                className="block w-full text-sm text-forest file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-forest file:text-cream hover:file:opacity-90 file:cursor-pointer"
+                className="sr-only"
               />
-              {photo && (
-                <p className="mt-2 text-xs text-olive">
-                  Selected: {photo.name}
-                </p>
-              )}
-            </div>
+              <span className="inline-block px-4 py-2 rounded-full bg-forest text-cream text-sm font-semibold">
+                {photo ? "Change photo" : "Choose photo"}
+              </span>
+              <span className="text-xs text-olive break-all">
+                {photo
+                  ? photo.name
+                  : "PNG, JPG, or HEIC. We don’t save it."}
+              </span>
+            </label>
             <input
               type="text"
               value={name}
@@ -104,9 +107,6 @@ export default function Home() {
               placeholder="…or type the plant name"
               className="mt-3 w-full px-4 py-3 rounded-lg bg-transparent border-2 border-forest/30 placeholder:text-olive/70 text-forest focus:outline-none focus:border-forest"
             />
-            <p className="mt-2 text-xs text-olive">
-              We don&apos;t save your photo. Pinky promise.
-            </p>
           </div>
 
           <QuestionGroup
