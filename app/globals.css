@@ -2,6 +2,8 @@
 
 @theme {
   --color-cream: #EFE5D9;
+  --color-paper: #FBF8F2;
+  --color-card: #FFFDF9;
   --color-mint: #B8D4B0;
   --color-olive: #7E8B4F;
   --color-forest: #2D4F35;
@@ -11,8 +13,18 @@
 }
 
 body {
-  background: var(--color-cream);
+  background: var(--color-paper);
   color: var(--color-forest);
   font-family: var(--font-sans);
   overflow-x: hidden;
+}
+
+/* Painted watercolor art sits on white; multiply drops the white so only the paint shows. */
+.watercolor {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: multiply;
+  opacity: 0.9;
 }

@@ -27,8 +27,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-cream text-forest">
-        {children}
+      <body className="relative min-h-full flex flex-col bg-paper text-forest">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+          <img
+            src="/watercolor/eucalyptus.jpg"
+            alt=""
+            aria-hidden="true"
+            className="watercolor top-[-30px] right-[-40px] w-[min(40vw,420px)] rotate-[18deg]"
+          />
+          <img
+            src="/watercolor/eucalyptus.jpg"
+            alt=""
+            aria-hidden="true"
+            className="watercolor bottom-[-40px] left-[-50px] w-[min(36vw,380px)] rotate-[198deg]"
+          />
+        </div>
+        <div className="relative z-10 flex flex-col flex-1">{children}</div>
       </body>
     </html>
   );

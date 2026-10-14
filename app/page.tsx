@@ -131,7 +131,7 @@ export default function Home() {
 
         <form
           onSubmit={handleSubmit}
-          className="bg-cream rounded-2xl border border-forest/10 shadow-[0_6px_32px_-16px_rgba(45,79,53,0.18)] p-6 md:p-8 space-y-8"
+          className="bg-card rounded-2xl border border-forest/10 shadow-[0_6px_32px_-16px_rgba(45,79,53,0.18)] p-6 md:p-8 space-y-8"
         >
           <div>
             <div className="text-[11px] tracking-[0.2em] uppercase font-bold text-olive mb-3">
@@ -270,7 +270,7 @@ function VerdictView({
     return (
       <main className="min-h-screen px-5 sm:px-6 py-14 md:py-24 w-full">
         <div className="max-w-2xl mx-auto w-full">
-          <div className="bg-cream rounded-2xl border-2 border-dashed border-olive p-7 md:p-10">
+          <div className="bg-card rounded-2xl border-2 border-dashed border-olive p-7 md:p-10">
             <div className="text-[11px] tracking-[0.2em] uppercase font-bold text-olive mb-4">
               Couldn’t identify
             </div>
@@ -306,7 +306,7 @@ function VerdictView({
           </div>
         </header>
 
-        <div className="bg-cream rounded-2xl border border-forest/10 shadow-[0_6px_32px_-16px_rgba(45,79,53,0.18)] p-6 md:p-8 grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-7 md:items-start">
+        <div className="bg-card rounded-2xl border border-forest/10 shadow-[0_6px_32px_-16px_rgba(45,79,53,0.18)] p-6 md:p-8 grid grid-cols-1 md:grid-cols-[0.85fr_1.15fr] gap-7 md:items-start">
           <div
             className={`relative aspect-square rounded-xl overflow-hidden ${photoTreatment}`}
             style={{
